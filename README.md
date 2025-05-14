@@ -26,6 +26,9 @@ docker compose up --build
   - Encola en `resize`, marca `QUEUED` en Redis
     
   - Devuelve `{ "job_id": "<uuid>" }`
+
+![Screenshot from 2025-05-13 19-53-33](https://github.com/user-attachments/assets/030eb18a-3245-4a7a-b287-b2cfdc316e36)
+
     
 - **GET** `/status/{job_id}`
   
