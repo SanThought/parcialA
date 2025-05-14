@@ -1,12 +1,8 @@
-![Screenshot from 2025-05-13 20-24-29](https://github.com/user-attachments/assets/1e095c7e-79b5-43c0-87a1-f224f35ddf4e)
+
 
 ![Screenshot from 2025-05-13 20-22-43](https://github.com/user-attachments/assets/84bce331-2505-4318-add4-03fe04407aba)
 
 
-
-
-
-![Screenshot from 2025-05-13 20-16-01](https://github.com/user-attachments/assets/c4711ffa-776c-466f-bc32-82585ffb8c45)
 
 **Ejercicio 18 – Feature Flags con un exchange fanout**
 
