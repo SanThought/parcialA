@@ -1,0 +1,68 @@
+version: "3.8"
+
+services:
+  rabbitmq:
+    image: rabbitmq:3-management
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    volumes:
+      - rabbit_data:/var/lib/rabbitmq
+
+  redis:
+    image: redis:7-alpine
+
+  api:
+    build: ./api
+    environment:
+      - RABBIT_URL=amqp://guest:guest@rabbitmq:5672/
+      - REDIS_HOST=redis
+      - IMAGE_DIR=/shared/images
+    depends_on:
+      - rabbitmq
+      - redis
+    ports:
+      - "8000:8000"
+    volumes:
+      - shared-data:/shared
+
+  resize_worker:
+    build: ./workers
+    command: python resize_worker.py
+    environment:
+      - RABBIT_URL=amqp://guest:guest@rabbitmq:5672/
+      - IMAGE_DIR=/shared/images
+    depends_on:
+      - rabbitmq
+    volumes:
+      - shared-data:/shared
+
+  watermark_worker:
+    build: ./workers
+    command: python watermark_worker.py
+    environment:
+      - RABBIT_URL=amqp://guest:guest@rabbitmq:5672/
+      - IMAGE_DIR=/shared/images
+    depends_on:
+      - rabbitmq
+    volumes:
+      - shared-data:/shared
+
+  detect_worker:
+    build: ./workers
+    command: python detect_worker.py
+    environment:
+      - RABBIT_URL=amqp://guest:guest@rabbitmq:5672/
+      - IMAGE_DIR=/shared/images
+    depends_on:
+      - rabbitmq
+    volumes:
+      - shared-data:/shared
+
+volumes:
+  rabbit_data:
+  shared-data:
+
